@@ -8,6 +8,7 @@ from uuid import uuid4
 from timeit import default_timer as timer
 
 import random
+# import json
 
 
 def proof_of_work(last_proof):
@@ -21,16 +22,23 @@ def proof_of_work(last_proof):
     """
 
     start = timer()
+    # last_hash = json.dumps(last_proof)
 
     print("Searching for next proof")
     proof = 0
+    while valid_proof(last_proof, proof) is False:
+        proof += 1
+
     #  TODO: Your code here
+    # last_proof_str = f'{last_proof}'.encode()
+    # # hash string
+    # last_proof_hash = hashlib.sha256(last_proof_str).hexdigest()
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
 
-def valid_proof(last_hash, proof):
+def valid_proof(last_proof, proof):
     """
     Validates the Proof:  Multi-ouroborus:  Do the last six characters of
     the hash of the last proof match the first six characters of the hash
@@ -40,7 +48,14 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    # guess = f"{proof}".encode()
+    # ADD .ENCODE() IF YOU GET ERRORS WHEN YOU TEST MINE ENDPOINT IN BROSWER
+    # now find the hash below
+    # guess_hash = hashlib.sha256(last_hash.proof).hexdigest().encode()
+    # compare below to see if matches
+    last_hash = hashlib.sha256(str(last_proof).encode()).hexdigest()
+    guess = hashlib.sha256(str(proof).encode()).hexdigest()
+    return guess[:6] == last_hash[-6:]
 
 
 if __name__ == '__main__':

@@ -17,6 +17,7 @@ def get_indices_of_item_weights(weights, length, limit):
         hash_table_insert(ht, weights[i], i)  # use HTI method
 
     for i in range(0, length):
+        # add two weights 
         difference = limit - weights[i]  # now find the difference subtract
         result_difference = hash_table_retrieve(ht, difference)
         if result_difference is not None:
